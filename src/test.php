@@ -3,7 +3,7 @@
 require_once 'search.php';
 require_once 'SynoPluginMock.php';
 
-$domain = 'https://www.oxtorrent.vc';
+$domain = 'https://www.cpasbien.ac';
 $qurl = '/recherche/';
 $curl = curl_init();
 $query = 'walking dead';

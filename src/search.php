@@ -1,7 +1,7 @@
 <?php
 class SynoDLMSearchOxTorrent {
 
-	private $domain = 'https://www.oxtorrent.vc';
+	private $domain = 'https://www.cpasbien.ac';
 	private $qurl = '/recherche/';
 	public $max_results = 0;
 	public $verbose = false;
@@ -84,27 +84,36 @@ class SynoDLMSearchOxTorrent {
             } catch (Exception $e) {
                 echo "Link for $title is probably a click bait, skipping\n";
                 $torrents[$index]["title"] = "INVALID - " . $title;
-                $torrents[$index]["url"] = "INVALID - " . $this->domain . $url;
+                $torrents[$index]["url"] = "INVALID - " . $this->domain . $title;
+            }
+
+            // HASH
+//            $torrents[$index]["hash"] = $this->getHash($output);
+            if (isset($url)) {
+                echo $url;
+                $torrents[$index]["hash"] = substr($url, strlen('/telecharger/'));
+            } else {
+                $torrents[$index]["hash"] = "Invalid file";
             }
 
 
-
-            // HASH
-            $torrents[$index]["hash"] = $this->getHash($output);
-
             // DETAILS
-            preg_match('/<div class=\"block-detail\"><i class=\"fa fa-th-large\"> <\/i>.+<\/div>\n<table class=\"table\">.+<\/table>/s', $output, $details);
-            preg_match_all('/<td .+<\/td>/', $details[0], $res);
-            $torrents[$index]["size"] = $this->getDetail($res[0][2]);
-            $torrents[$index]["seeds"] = $this->getDetail($res[0][3], true);
-            $torrents[$index]["leechers"] = $this->getDetail($res[0][4], true);
-            $torrents[$index]["category"] = strip_tags($this->getDetail($res[0][0]));
+            preg_match('/<div id="titre">.*<div/sU', $output, $detailsDiv);
+            preg_match_all('/<span((?!\/span).)*<\/span>/s', $detailsDiv[0], $details);
+            $sizeString = strip_tags($details[0][0]);
+            $seeds = strip_tags($details[0][1]);
+            $leechs = strip_tags($details[0][2]);
+            $sizeArray = explode(' ', $sizeString);
+            $size = $this->sizeInBytes($sizeArray[0], $sizeArray[1]);
+            $torrents[$index]["size"] = $size;
+            $torrents[$index]["seeds"] = $seeds;
+            $torrents[$index]["leechers"] = $leechs;
+            $torrents[$index]["category"] = "Inconnu";
 
-            $size_array = explode(" ", $torrents[$index]["size"]);
             $plugin->addResult(
                 $torrents[$index]["title"],
                 $torrents[$index]["url"],
-                $this->sizeInBytes($size_array[0], $size_array[1]),
+                $size,
                 date("Y-m-d H:i:s", time()),
                 $entry,
                 $torrents[$index]["hash"],
@@ -132,7 +141,7 @@ class SynoDLMSearchOxTorrent {
         $url = "";
         if ($result === 0) {
             echo "Couldn't find link in javascript, looking for regular href";
-            $prefix = "<div class='download'><div class='btn-download'><a href='";
+            $prefix = "<div class='btn-download'><a href='";
             $suffix = "><img";
             $url_regex = "/$prefix.+$suffix/";
             $length = strlen($prefix);
@@ -166,6 +175,7 @@ class SynoDLMSearchOxTorrent {
             }
         }
 	    echo $result;
+	    exit;
 	    return strip_tags($result);
     }
 
