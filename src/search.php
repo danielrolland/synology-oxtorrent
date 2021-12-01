@@ -38,7 +38,7 @@ class SynoDLMSearchOxTorrent {
 
 	public function parse($plugin, $response) {
 
-        $regx = '/<td .+i> <a href=\".+\" title/';
+        $regx = '/<td.*>.*<a href="[^"]*" title/';
 
 		if (!($result_count = preg_match_all($regx, $response, $rows, PREG_SET_ORDER))) {
 			return 0;

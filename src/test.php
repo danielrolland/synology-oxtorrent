@@ -6,7 +6,7 @@ require_once 'SynoPluginMock.php';
 $domain = 'https://www.oxtorrent.vc';
 $qurl = '/recherche/';
 $curl = curl_init();
-$query = 'fear the walking dead S06 VOSTFR';
+$query = 'walking dead';
 $url = $domain . $qurl . urlencode($query);
 curl_setopt($curl, CURLOPT_URL, $url);
 curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
