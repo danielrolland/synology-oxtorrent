@@ -25,5 +25,8 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: sh ${{ github.workspace }}/src/build.sh
+      - name: Run a mutli-line script
+        run: |
+          cd ${{ github.workspace }} \
+          ls -la \
+          sh build.sh
