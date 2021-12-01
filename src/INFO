@@ -1,10 +1,10 @@
 {
 "name": "oxtorrent",
 "displayname": "",
-"description": "DLM pour telecharger depuis oxtorrent",
+"description": "DLM pour telecharger depuis cpasbien",
 "version": "0.6",
 "site": "https://www.cpasbien.ac",
 "module": "search.php",
 "type": "search",
-"class": "SynoDLMSearchOxTorrent"
+"class": "SynoDLMSearchCPasBien"
 }

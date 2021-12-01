@@ -1,5 +1,5 @@
 <?php
-class SynoDLMSearchOxTorrent {
+class SynoDLMSearchCPasBien {
 
 	private $domain = 'https://www.cpasbien.ac';
 	private $qurl = '/recherche/';
