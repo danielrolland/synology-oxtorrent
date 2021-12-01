@@ -28,5 +28,6 @@ jobs:
       - name: Run a mutli-line script
         run: |
           cd ${{ github.workspace }}
+          cd src
           ls -la
           sh build.sh
