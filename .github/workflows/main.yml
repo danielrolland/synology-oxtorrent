@@ -27,6 +27,6 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a mutli-line script
         run: |
-          cd ${{ github.workspace }} \
-          ls -la \
+          cd ${{ github.workspace }}
+          ls -la
           sh build.sh
