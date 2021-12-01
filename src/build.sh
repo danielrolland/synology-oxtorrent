@@ -1,4 +1,4 @@
 #/usr/bin/sh
 
-tar zcf oxtorrent.dlm INFO search.php
-mv oxtorrent.dlm ..
+tar zcf cpasbien.dlm INFO search.php
+mv cpasbien.dlm ..
